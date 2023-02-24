@@ -3,6 +3,7 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utils.PropertyReader;
@@ -15,6 +16,11 @@ public class ApiTests extends BaseTest {
     @BeforeMethod
     public void openUrl() {
         bookPage.open();
+    }
+    @AfterMethod
+    public void clearCookie() {
+        driver.manage().deleteAllCookies();
+        driver.navigate().refresh();
     }
 
     @Test
