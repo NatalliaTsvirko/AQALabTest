@@ -27,25 +27,33 @@ public class LoginTest extends BaseTest {
     @Test(description = "Login users with valid data",retryAnalyzer = ReTry.class)
     @Description("Login users with valid data")
     public void positiveLogin() {
+        log.info("checking that the page is opened");
         boolean isLoggedIn = loginPage.open().login( USERNAME, PASSWORD).isPageOpened();
-        assertTrue(isLoggedIn);
+        log.info("checking that user is logged");
+        assertTrue( isLoggedIn);
     }
 
     @Test(description = "logout user")
     @Description("logout user")
     public void logoutUser() {
+        log.info("checking that the page is opened");
         boolean isLoggedIn = loginPage.open().login(USERNAME, PASSWORD).isPageOpened();
         assertTrue(isLoggedIn);
+        log.info("on profile page click on button 'logout'");
         profilePage.clickLogoutButton();
+        log.info("checking that user on login page");
         assertTrue(loginPage.isPageOpened());
     }
 
     @Test(description = "Checked ERROR message ",dataProvider = "Negative Test Login Data")
     @Description("login with negative data")
     public void loginNegativeTest(String username, String password, String expectedErrorMessage) {
+        log.info("input on field username and password");
         loginPage.login(username, password);
+        log.info("take screenshot");
         AllureUtils.attachScreenshot(driver);
         String actualErrorMessageText = loginPage.getErrorMessageText();
+        log.info("checking actualErrorMessageText with expectedErrorMessage");
         Assert.assertEquals(actualErrorMessageText, expectedErrorMessage);
 
     }
